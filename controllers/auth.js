@@ -46,6 +46,19 @@ exports.login = asyncHandler(async (req, res, next) => {
   sendTokenResponse(user, 200, res);
 });
 
+// @desc     Log user out/clear cookie
+// @route    GET /api/v1/auth/logout
+// @access   Private
+exports.logout = asyncHandler(async (req, res, next) => {
+  res.cookie("token", "none", {
+    expires: new Date(Date.now() + 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({
+    success: true,
+    data: {},
+  });
+});
 // @desc     Get current loggedIn User
 // @route    GET /api/v1/auth/me
 // @access   Private
@@ -177,8 +190,10 @@ const sendTokenResponse = (user, statusCode, res) => {
 
   if (process.env.NODE_ENV === "production") options.secure = true;
 
-  res.status(statusCode).cookie("token", token, options).json({
-    success: true,
-    token,
-  });
+  // res.status(statusCode).cookie("token", token, options).json({
+  //   success: true,
+  //   token,
+  // });
+  res.cookie("token", token, options);
+  res.status(200).redirect("/api/v1/bootcamps");
 };
