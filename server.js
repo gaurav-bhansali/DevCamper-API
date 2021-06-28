@@ -30,13 +30,9 @@ connectDB();
 
 const app = express();
 
-//
 app.use(express.urlencoded({ extended: false }));
 // Body Parser
 app.use(express.json());
-
-// app.set("view engine", "ejs");
-// app.set("views", path.join(__dirname, "views"));
 // Cookie Parser
 app.use(cookieParser());
 
@@ -70,11 +66,11 @@ app.use(helmet());
 app.use(xss());
 
 // Rate Limiting
-// const limiter = rateLimit({
-//   windowMs: 10 * 60 * 1000, //10 mins
-//   max: 100,
-// });
-// app.use(limiter);
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, //10 mins
+  max: 100,
+});
+app.use(limiter);
 
 // Prevent http param pollution
 app.use(hpp());
