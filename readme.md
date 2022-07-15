@@ -2,9 +2,6 @@
 
 > Backend API for DevCamper App which is a bootcamp directory website
 
-## Usage
-
-Rename "config/config.env.env" to "config/config.env" and update the values/settings to your own
 
 ## Install Dependencies
 
